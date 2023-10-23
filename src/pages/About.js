@@ -21,7 +21,7 @@ export default function About() {
           <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
             Flowbite helps you connect with friends and communities of people
             who share your interests. Connecting with your friends and family as
-            well as discovering new ones is easy with features like Groups.
+            well as discovering new ones is easy with features like Groups."Nita"
           </p>
           <a
             href="#"
