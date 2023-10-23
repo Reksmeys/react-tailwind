@@ -9,7 +9,7 @@ export default function Read() {
             Modified some changes
           </h2>
           <p className="mb-8 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-            Reksmey helps you connect with friends, family and communities of
+            Reksmey to dev branch helps you connect with friends, family and communities of
             people who share your interests. Connecting with your friends and
             family as well as discovering new ones is easy with features like
             Groups, Watch and Marketplace.
