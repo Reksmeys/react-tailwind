@@ -12,7 +12,9 @@ export default function Read() {
             Reksmey to dev branch helps you connect with friends, family and communities of
             people who share your interests. Connecting with your friends and
             family as well as discovering new ones is easy with features like
-            Groups, Watch and Marketplace.
+            Groups, Watch and Marketplace. 
+
+            Modified by Nita
           </p>
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
             <a
