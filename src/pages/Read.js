@@ -19,7 +19,7 @@ export default function Read() {
               href="#"
               className="inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
             >
-              Get started
+              Hello World
             </a>
             <a
               href="#"
