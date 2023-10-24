@@ -27,9 +27,12 @@ export default function About() {
             href="#"
             className="inline-flex items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900"
           >
+
+            Let Start again
+
             Get started to teach reactjs with github 
             Hello happy birthday - by Reksmey
-
+64d8cf2e5dee2e638d1ee340f2f40f5d481bd3ac
             <svg
               className="ml-2 -mr-1 w-5 h-5"
               fill="currentColor"
