@@ -33,7 +33,6 @@ export default function About() {
             Get started to teach reactjs with github 
             Hello happy birthday - by Reksmey
             Hello happy birthday - by Reksmey
-64d8cf2e5dee2e638d1ee340f2f40f5d481bd3ac
             <svg
               className="ml-2 -mr-1 w-5 h-5"
               fill="currentColor"
