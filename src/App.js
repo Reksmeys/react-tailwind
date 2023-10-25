@@ -9,6 +9,7 @@ import MyFooter from './components/MyFooter';
 import NotFound from './pages/404';
 import Service from './pages/Service';
 import Contact from './pages/Contact';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='*' element={<NotFound />}/>
         </Route>
-        <Route path="/login" element={<h1>Login</h1>} />
+        <Route path="/login" element={<Login />} />
       </Routes>
   );
 }

@@ -1,35 +1,25 @@
 import { useEffect, useState } from "react";
 import Article from "../components/Article";
-import Cards, { Avatar } from "../components/Cards";
-import MyFooter from "../components/MyFooter";
-import MyNav from "../components/MyNav";
+import Cards from "../components/Cards";
 import Loadings from "../components/Loadings";
+import { fetchProducts } from "../services/productAction";
 
 function Home(){
     // state -> special variables
     // state is used to store data from api response
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
-    const [count, setCount] = useState(0)
 
-    const fetchProducts = (limit, offset) => {
-        fetch(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=${limit}`)
-        .then(res => res.json())
-        .then(res => {
-            setProducts(res)
-            setLoading(false)
-        })
-    }
     // execute
     useEffect(() => {
         // call to api product
         fetchProducts(8, 0)
-        console.log("in use effect")
+        .then(response => {
+            setProducts(response)
+            setLoading(false)
+        })
+        
     }, [])
-
-    useEffect(() => {
-        console.log("other use effect")
-    }, [count])
 
     return(
         <>
