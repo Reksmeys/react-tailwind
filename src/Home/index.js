@@ -46,6 +46,7 @@ function Home(){
                             key={product.id}
                             url={product.images[0]} 
                             desc={product.title} 
+                            id={product.id}
                             price={product.price} />) 
                     }
                     </section>

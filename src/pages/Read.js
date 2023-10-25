@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getOneProduct } from "../services/productAction";
 
 export default function Read() {
+  // get id from browser
+  const {id} = useParams()
+  useEffect(() => {
+    console.log(id)
+    getOneProduct(id)
+    .then(res => res.json())
+    .then(response => console.log(response))
+  }, [])
+
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
