@@ -10,6 +10,7 @@ import NotFound from './pages/404';
 import Service from './pages/Service';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import ProductForm from './components/ProductForm';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/service' element={<Service />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/create' element={<ProductForm />} />
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />

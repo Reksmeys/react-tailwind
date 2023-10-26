@@ -3,7 +3,6 @@ import React, { useState } from "react";
 export default function Login() {
 
   const [email, setEmail] = useState("")
-
   const handleInputChange = (e) => {
     console.log(e.target.value)
     setEmail(e.target.value)
