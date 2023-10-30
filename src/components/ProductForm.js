@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchCategories, insertProduct } from "../services/productAction";
+import { fetchCategories, insertProduct, uploadImageToServer } from "../services/productAction";
 
 export default function ProductForm() {
     // URL insert: https://api.escuelajs.co/api/v1/products/
@@ -17,10 +17,18 @@ export default function ProductForm() {
     // handle onsubmit
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        console.log("form submit")
         console.log(product)
-        insertProduct(product)
-        .then(res => console.log(res))
+        let image = new FormData()
+        image.append('file', source)
+        // perform upload image first
+        uploadImageToServer(image)
+        .then(res => {
+          // assign url image to state
+          product.images = [res.data.location]
+          // final insert product with image
+          insertProduct(product)
+          .then(res => console.log(res))
+        })
     }
     // gather user input
     const onChangeHandler = (e) => {
@@ -36,8 +44,10 @@ export default function ProductForm() {
     // handle user upload image
     const onFileUpload = (e) => {
         console.log(e.target.files)
+        // setSource(e.target.files[0])
+        // console.log(source)
         setSource(e.target.files[0])
-        console.log(source)
+        console.log('source: ', source)
     }
     useEffect(() => {
         fetchCategories()
@@ -159,9 +169,11 @@ export default function ProductForm() {
                 </label>
             </div> 
             <div>
-                {/* <img 
-                    src={URL.createObjectURL(source)}
-                /> */}
+                <img 
+                    src={source == "" ? product.images[0] : URL.createObjectURL(source)}
+                    width={300}
+                />
+
             </div>
 
         </div>

@@ -11,6 +11,7 @@ import Service from './pages/Service';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import ProductForm from './components/ProductForm';
+import ProductDataTable from './components/ProductDataTable';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path='/dashboard' element={<ProductDataTable />} />
       </Routes>
   );
 }
