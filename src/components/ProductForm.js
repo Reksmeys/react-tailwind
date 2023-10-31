@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchCategories, insertProduct, uploadImageToServer } from "../services/productAction";
+import { fetchCategories, insertProduct, updateProducts, uploadImageToServer } from "../services/productAction";
 import { useLocation } from "react-router-dom";
 
 export default function ProductForm({edit}) {
@@ -11,6 +11,7 @@ export default function ProductForm({edit}) {
     const [source, setSource] = useState("")
     // declare product object
     const [product, setProduct] = useState({
+        id: 0,
         title: "",
         price: 0,
         description: "",
@@ -22,18 +23,31 @@ export default function ProductForm({edit}) {
     const handleOnSubmit = (e) => {
         e.preventDefault()
         console.log('is edit? ', edit)
-        console.log(product)
-        let image = new FormData()
-        image.append('file', source)
-        // perform upload image first
-        uploadImageToServer(image)
-        .then(res => {
-          // assign url image to state
-          product.images = [res.data.location]
-          // final insert product with image
-          insertProduct(product)
-          .then(res => console.log(res))
-        })
+        if (edit){
+          // is used pick new images for product update?
+          if (source == ""){
+            // user don't browse any new image
+            console.log('product before update: ', product)
+            updateProducts(product, product.id)
+            .then(res => console.log(res))
+          }else{
+            // will execute when user browse new images for product
+
+          }
+        }
+
+        // console.log(product)
+        // let image = new FormData()
+        // image.append('file', source)
+        // // perform upload image first
+        // uploadImageToServer(image)
+        // .then(res => {
+        //   // assign url image to state
+        //   product.images = [res.data.location]
+        //   // final insert product with image
+        //   insertProduct(product)
+        //   .then(res => console.log(res))
+        // })
     }
     // gather user input
     const onChangeHandler = (e) => {
@@ -57,7 +71,16 @@ export default function ProductForm({edit}) {
     useEffect(() => {
       console.log('is edit? ', edit)
       if(edit){
-        console.log("product object", location.state)
+        console.log("product object", location.state.title)
+        // destruturing object from location.state
+        let {id, title, price, description, category, images} = location.state
+        // reassign value to state
+        product.id = id
+        product.title = title
+        product.price = price
+        product.description = description
+        product.categoryId = category.id
+        product.images = images
       }
 
       fetchCategories()
@@ -134,7 +157,7 @@ export default function ProductForm({edit}) {
               onChange={onChangeHandler}
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             >
-              <option selected="">Product Category</option>
+              {/* <option selected>Product Category</option> */}
               {
                 categories.map(category => (
                     <option value={category.id}>{category.name}</option>
