@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { fetchAllProducts } from '../services/productAction';
+import { fetchAllProducts, searchProducts } from '../services/productAction';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductDataTable() {
     const [products, setProducts] = useState([])
+    const [query, setQuery] = useState("")
+
+    const navigate = useNavigate()
+
     const columns = [
         {
             name: 'Title',
@@ -23,14 +28,26 @@ export default function ProductDataTable() {
                 width={100}
                 style={{padding: 10}}
             />
+        },
+        {
+          name: "Actions",
+          selector: row => 
+          <>
+            <button type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">View</button>
+            <button
+              onClick={() => navigate("/edit", {
+                state: row
+              })}
+              type="button" 
+              class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Edit</button>
+            <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800">Delete</button>
+          </>
         }
-
     ];
-
     useEffect(() => {
-        fetchAllProducts()
+        searchProducts(query)
         .then(res => setProducts(res))
-    }, [])
+    }, [query])
     
     
   return (
@@ -1367,9 +1384,19 @@ export default function ProductDataTable() {
         columns={columns}
         data={products}
         pagination
-        
-      />
-      
+        subHeader
+        subHeaderComponent={
+          <input 
+            type='text'
+            placeholder='Searching....'
+            className='text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+            onChange={(e) => {
+              setQuery(e.target.value)
+              console.log(query)
+            }}
+          />
+        }
+      />  
     </main>
   </div>
   )

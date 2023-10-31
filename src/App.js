@@ -22,7 +22,8 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/service' element={<Service />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/create' element={<ProductForm />} />
+          <Route path='/create' element={<ProductForm edit={false} />} />
+          <Route path='/edit' element={<ProductForm edit={true} />} />
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />

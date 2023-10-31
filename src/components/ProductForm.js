@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { fetchCategories, insertProduct, uploadImageToServer } from "../services/productAction";
+import { useLocation } from "react-router-dom";
 
-export default function ProductForm() {
-    // URL insert: https://api.escuelajs.co/api/v1/products/
+export default function ProductForm({edit}) {
+
+  // get object from navigation
+  const location = useLocation()
+
     const [categories, setCategories] = useState([])
     const [source, setSource] = useState("")
     // declare product object
@@ -17,6 +21,7 @@ export default function ProductForm() {
     // handle onsubmit
     const handleOnSubmit = (e) => {
         e.preventDefault()
+        console.log('is edit? ', edit)
         console.log(product)
         let image = new FormData()
         image.append('file', source)
@@ -50,8 +55,13 @@ export default function ProductForm() {
         console.log('source: ', source)
     }
     useEffect(() => {
-        fetchCategories()
-        .then(resp => setCategories(resp))
+      console.log('is edit? ', edit)
+      if(edit){
+        console.log("product object", location.state)
+      }
+
+      fetchCategories()
+      .then(resp => setCategories(resp))
     }, [])
     
   return (

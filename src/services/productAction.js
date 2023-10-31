@@ -18,6 +18,12 @@ export const fetchAllProducts = async () => {
     return response.json()
 }
 
+// search product by title
+export const searchProducts = async (query) => {
+    const response = await fetch(`${API_URL}products?title=${query}`)
+    return response.json()
+}
+
 // get product categories
 export const fetchCategories = async () => {
     const response = await fetch(`${API_URL}categories`)
