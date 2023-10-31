@@ -27,9 +27,8 @@ function Home(){
                 <section className="container mx-auto mt-11">
                     <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center mt-10" style={{marginTop: 100}}>We invest in popular products</h1>
                     <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 text-center">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
-
                     {/* loop data from product to cards */}
-                    <section className="grid grid-cols-6 md:grid-cols-5 lg:grid-cols-4 gap-4">
+                    <section className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-4 gap-4">
                     {
                         loading ? <Loadings /> : 
                         products.length > 0 && products.map(product => <Cards 
