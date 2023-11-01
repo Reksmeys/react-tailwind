@@ -26,28 +26,39 @@ export default function ProductForm({edit}) {
         if (edit){
           // is used pick new images for product update?
           if (source == ""){
-            // user don't browse any new image
+            // user don't choose any new image
             console.log('product before update: ', product)
             updateProducts(product, product.id)
             .then(res => console.log(res))
           }else{
             // will execute when user browse new images for product
-
+            let image = new FormData()
+            image.append('file', source)
+            uploadImageToServer(image)
+            .then(res => {
+              product.images = [res.data.location]
+              console.log('product before update with new image', product)
+              updateProducts(product, product.id)
+              .then(res => console.log(res))
+            })
           }
+        }else{
+          // block code execute when user insert product
+          // console.log(product)
+          let image = new FormData()
+          image.append('file', source)
+          // perform upload image first
+          uploadImageToServer(image)
+          .then(res => {
+            // assign url image to state
+            product.images = [res.data.location]
+            // final insert product with image
+            insertProduct(product)
+            .then(res => console.log(res))
+          })
         }
 
-        // console.log(product)
-        // let image = new FormData()
-        // image.append('file', source)
-        // // perform upload image first
-        // uploadImageToServer(image)
-        // .then(res => {
-        //   // assign url image to state
-        //   product.images = [res.data.location]
-        //   // final insert product with image
-        //   insertProduct(product)
-        //   .then(res => console.log(res))
-        // })
+       
     }
     // gather user input
     const onChangeHandler = (e) => {
@@ -63,7 +74,6 @@ export default function ProductForm({edit}) {
     // handle user upload image
     const onFileUpload = (e) => {
         console.log(e.target.files)
-        // setSource(e.target.files[0])
         // console.log(source)
         setSource(e.target.files[0])
         console.log('source: ', source)
