@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { fetchCategories, insertProduct, updateProducts, uploadImageToServer } from "../services/productAction";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductForm({edit}) {
 
   // get object from navigation
   const location = useLocation()
+  const navigate = useNavigate()
 
     const [categories, setCategories] = useState([])
     const [source, setSource] = useState("")
@@ -29,7 +30,9 @@ export default function ProductForm({edit}) {
             // user don't choose any new image
             console.log('product before update: ', product)
             updateProducts(product, product.id)
-            .then(res => console.log(res))
+            .then(res => {
+              navigate('/dashboard')
+            })
           }else{
             // will execute when user browse new images for product
             let image = new FormData()
@@ -39,7 +42,10 @@ export default function ProductForm({edit}) {
               product.images = [res.data.location]
               console.log('product before update with new image', product)
               updateProducts(product, product.id)
-              .then(res => console.log(res))
+              .then(res => {
+                console.log(res)
+                navigate('/dashboard')
+              })
             })
           }
         }else{
@@ -54,11 +60,12 @@ export default function ProductForm({edit}) {
             product.images = [res.data.location]
             // final insert product with image
             insertProduct(product)
-            .then(res => console.log(res))
+            .then(res => {
+              console.log(res)
+              navigate('/dashboard')
+            })
           })
-        }
-
-       
+        }  
     }
     // gather user input
     const onChangeHandler = (e) => {

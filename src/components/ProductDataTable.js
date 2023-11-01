@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { fetchAllProducts, searchProducts } from '../services/productAction';
 import { useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'flowbite-react';
+import Modals from './Modals';
 
 export default function ProductDataTable() {
     const [products, setProducts] = useState([])
+    const [product, setProduct] = useState({})
     const [query, setQuery] = useState("")
+
+    // modal state
+    const [openModal, setOpenModal] = useState(false);
 
     const navigate = useNavigate()
 
@@ -33,7 +39,12 @@ export default function ProductDataTable() {
           name: "Actions",
           selector: row => 
           <>
-            <button type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">View</button>
+            <button 
+              onClick={() => {
+                setOpenModal(true)
+                setProduct(row)
+              }}
+              type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">View</button>
             <button
               onClick={() => navigate("/edit", {
                 state: row
@@ -1365,6 +1376,16 @@ export default function ProductDataTable() {
       </div>
     </aside>
     <main class="p-4 md:ml-64 h-auto pt-20">
+    
+    {/* modal */}
+  
+     <Modals 
+        openModal={openModal}
+        onCloseModal={() => setOpenModal(false)}
+        data={product}
+     /> 
+ 
+    {/* end modal */}
       
     <button 
       type="button" 
