@@ -21,7 +21,18 @@ export default function Modals({openModal, onCloseModal, data}) {
               ${
                 data.price
               }
+
             </p>
+            <p className="mb-5 text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              
+              {
+                data.category && data.category.name
+              }
+
+            </p>
+
+            {/* show category name */}
+
           </div>
           <div className='mt-5 grid grid-cols-3 md:grid-cols-6 gap-4'>
             
