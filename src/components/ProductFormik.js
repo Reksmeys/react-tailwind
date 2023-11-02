@@ -23,7 +23,7 @@ export default function ProductFormik() {
             description: Yup.string().required("Please write down appropriate description"),
             categoryId: Yup.number().required("Please choose category"),
             images: Yup.mixed().required("Required")
-            .test("FILE_SIZE", "Too Big", (value) => value && value.size < 1024*1024)
+            .test('FILE_SIZE', "Too Big", (value) => value && value.size < 1024*1024)
             .test("FILE_TYPE", "Invalid", (value) => value && ['image/png', 'image/jpg', 'image/jpeg'].includes(value.type))
         }),
         onSubmit: () => {
@@ -156,24 +156,27 @@ export default function ProductFormik() {
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                     </div>
+                        {
+                        formik.errors.images ? <p className='text-red-700'>{formik.errors.images}</p> : null
+                        }
                     <input 
                         id="dropzone-file" type="file"
-                        onChange={formik.handleChange}
-                        name='images'
+                        onChange={(e) => {
+                            formik.setFieldValue("images", e.target.files[0])
+                            setSource(e.target.files[0])
+                        }}
                         class="hidden" />
                 </label>
-                {
-                formik.errors.images ? <p className='text-red-700'>{formik.errors.images}</p> : null
-                }
+                
                 {
                     console.log(formik.errors.images)
                 }
             </div> 
             <div>
-                {/* <img 
-                    src={source == "" ? product.images[0] : URL.createObjectURL(source)}
-                    width={300}
-                /> */}
+                <img 
+                    src={source == "" ? formik.values.images[0] : URL.createObjectURL(source)}
+                    width={250}
+                />
 
             </div>
 
