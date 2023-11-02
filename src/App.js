@@ -12,8 +12,21 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import ProductForm from './components/ProductForm';
 import ProductDataTable from './components/ProductDataTable';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    if (!localStorage.getItem('color-theme')){
+      // set default theme to light
+      localStorage.setItem('color-theme', 'light')
+    }
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    }else{
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
+
   return (
       <Routes>
         <Route path="/" element={<MainLayout />}>
