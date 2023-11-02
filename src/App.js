@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import ProductForm from './components/ProductForm';
 import ProductDataTable from './components/ProductDataTable';
 import { useEffect } from 'react';
+import ProductFormik from './components/ProductFormik';
 
 function App() {
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/create' element={<ProductForm edit={false} />} />
           <Route path='/edit' element={<ProductForm edit={true} />} />
+          <Route path='/formik' element={<ProductFormik />} />
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />
