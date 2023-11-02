@@ -23,7 +23,7 @@ function Home(){
 
     return(
         <>
-            <main className="mt-10">
+            <main className="pt-10 dark:bg-gray-900">
                 <section className="container mx-auto mt-11">
                     <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center mt-10" style={{marginTop: 100}}>We invest in popular products</h1>
                     <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 text-center">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
