@@ -1,11 +1,13 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
-import { fetchCategories } from '../services/productAction'
+import { fetchCategories, insertProduct, uploadImageToServer } from '../services/productAction'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProductFormik() {
     const [categories, setCategories] = useState([])
     const [source, setSource] = useState("")
+    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues: {
@@ -19,7 +21,7 @@ export default function ProductFormik() {
             title: Yup.string()
             .max(15, "Must be 15 character or less")
             .required("It could not be blank"),
-            price: Yup.number().max(10, "Only up to 10").required("Required"),
+            price: Yup.number().max(1_000_000_000, "Only up to 1 millions").required("Required"),
             description: Yup.string().required("Please write down appropriate description"),
             categoryId: Yup.number().required("Please choose category"),
             images: Yup.mixed().required("Required")
@@ -28,6 +30,24 @@ export default function ProductFormik() {
         }),
         onSubmit: () => {
             console.log('on submit', formik.values)
+            console.log('source', source)
+            // block code execute when user insert product
+            // console.log(product)
+            let image = new FormData()
+            image.append('file', source)
+            // perform upload image first
+            uploadImageToServer(image)
+            .then(res => {
+              // assign url image to state
+              formik.values.images = [res.data.location]
+              console.log('with image:', formik.values)
+              // final insert product with image
+              insertProduct(formik.values)
+              .then(res => {
+                console.log(res)
+                navigate('/dashboard')
+              })
+            })
         }
     })
 
