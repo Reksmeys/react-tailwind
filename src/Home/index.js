@@ -2,23 +2,19 @@ import { useEffect, useState } from "react";
 import Article from "../components/Article";
 import Cards from "../components/Cards";
 import Loadings from "../components/Loadings";
-import { fetchProducts } from "../services/productAction";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProducts } from "../redux/actions/productActions";
 
 function Home(){
-    // state -> special variables
-    // state is used to store data from api response
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(true)
+    // requesting action
+    const dispatch = useDispatch()
 
-    // execute
+    // received global state
+    let {products, isLoading} = useSelector(state => state.productR)
+
+    // Intent to Subscription
     useEffect(() => {
-        // call to api product
-        fetchProducts(8, 0)
-        .then(response => {
-            setProducts(response)
-            setLoading(false)
-        })
-        
+        dispatch(fetchAllProducts(12, 0))
     }, [])
 
     return(
@@ -30,7 +26,8 @@ function Home(){
                     {/* loop data from product to cards */}
                     <section className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-4 gap-4">
                     {
-                        loading ? <Loadings /> : 
+                        
+                        isLoading ? <Loadings /> : 
                         products.length > 0 && products.map(product => <Cards 
                             key={product.id}
                             url={product.images[0]} 
