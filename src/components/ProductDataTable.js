@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Modals from './Modals';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../redux/actions/productActions';
+import { logout } from '../redux/actions/authAction';
 
 export default function ProductDataTable() {
     const dispatch = useDispatch()
 
     // received global state
     const {products} = useSelector(state => state.productR)
+    const { isLoggedIn } = useSelector(state => state.authR);
     
     const [product, setProduct] = useState({})
     const [query, setQuery] = useState("")
@@ -65,7 +67,7 @@ export default function ProductDataTable() {
     
     
   return (
-    <div class="antialiased bg-gray-50 dark:bg-gray-900">
+    isLoggedIn ? <div class="antialiased bg-gray-50 dark:bg-gray-900">
     <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
@@ -668,7 +670,7 @@ export default function ProductDataTable() {
             <img
               class="w-8 h-8 rounded-full"
               src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
-              alt="user photo"
+              alt="user profile of datatable dashboard"
             />
           </button>
           <div
@@ -787,10 +789,12 @@ export default function ProductDataTable() {
             >
               <li>
                 <a
-                  href="#"
+                  onClick={() => {
+                    dispatch(logout())
+                    navigate("/logout")
+                  }}
                   class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Sign out</a
-                >
+                  >Sign out</a>
               </li>
             </ul>
           </div>
@@ -1414,5 +1418,7 @@ export default function ProductDataTable() {
       />  
     </main>
   </div>
+  :
+  <Navigate to={"/unauthorized"} />
   )
 }

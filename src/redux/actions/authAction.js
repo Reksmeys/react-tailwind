@@ -4,14 +4,13 @@ import { actionTypes } from "./actionTypes"
 
   // service login
   const authLogin = (email, password) => {
-    return axios
-      .post(API_URL + "auth/login", {
+    return axios.post(API_URL + "auth/login", {
         email,
         password,
       })
       .then((response) => {
-        if (response.data.accessToken) {
-          localStorage.setItem("auth", JSON.stringify(response.data));
+        if (response.data.access_token) {
+          localStorage.setItem("auth", response.data.access_token);
         }
         return response.data;
       });
@@ -26,6 +25,7 @@ import { actionTypes } from "./actionTypes"
   export const login = (email, password) => (dispatch) => {
     return authLogin(email, password).then(
       (data) => {
+        console.log('Login Sucess', data)
         dispatch({
           type: actionTypes.LOGIN_SUCCESS,
           payload: { user: data },
@@ -33,17 +33,11 @@ import { actionTypes } from "./actionTypes"
         return Promise.resolve();
       },
       (error) => {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-  
+        console.log("failed login >>>>", error)
+        const message =(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         dispatch({
           type: actionTypes.LOGIN_FAIL,
         });
-  
         dispatch({
           type: actionTypes.SET_MESSAGE,
           payload: message,

@@ -42,6 +42,7 @@ function App() {
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path='/logout' element={<Login />} />
         <Route path='/dashboard' element={<ProductDataTable />} />
       </Routes>
   );

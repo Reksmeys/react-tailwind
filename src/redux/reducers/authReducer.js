@@ -1,6 +1,6 @@
 import { actionTypes } from "../actions/actionTypes";
 
-const auth = JSON.parse(localStorage.getItem("auth"));
+const auth = localStorage.getItem("auth");
 
 const initialState = auth
   ? { isLoggedIn: true, auth }

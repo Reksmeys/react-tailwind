@@ -6,8 +6,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
 
-  const { isLoggedIn } = useSelector(state => state.authR);
+  
   const { message } = useSelector(state => state.msgR);
+  const { isLoggedIn } = useSelector(state => state.authR);
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -21,11 +22,11 @@ export default function Login() {
       password: ""
     },
     validationSchema: Yup.object({
-        email: Yup.string()
+      email: Yup.string()
         .email("Please input a valid mail")
         .required("Required"),
-        password: Yup.string().min(4)
-        .matches(pwdRules, {message: "Please create a stronger password"})
+      password: Yup.string().min(4)
+        .matches(pwdRules, { message: "Please create a stronger password" })
         .required("Required")
     }),
     onSubmit: values => {
@@ -33,28 +34,20 @@ export default function Login() {
       dispatch(login(values.email, values.password))
         .then(() => {
           navigate("/dashboard");
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((er) => {
           console.log("error login", er)
         });
-      
-        if (isLoggedIn) {
-          return <Navigate to="/profile" />;
-        }
+
+      if (isLoggedIn) {
+        return <Navigate to="/profile" />;
+      }
     }
   })
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-
-          {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
-            </div>
-          )}
+    <section className="bg-gray-50 dark:bg-gray-900">  
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="/"
@@ -72,10 +65,13 @@ export default function Login() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form 
+            {message && (
+              <p className="text-center text-red-600">{message}</p>
+            )}
+            <form
               className="space-y-4 md:space-y-6"
               onSubmit={formik.handleSubmit}
-              >
+            >
               <div>
                 <label
                   htmlFor="email"
