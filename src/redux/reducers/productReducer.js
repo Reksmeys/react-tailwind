@@ -14,8 +14,11 @@ const initialState = {
 export const productReducer = (state = initialState, action) =>{
     // checking request 
     let {type, payload} = action
+    let {SEARCH_PRODUCT, GET_PRODUCTS} = actionTypes
     switch(type){
-        case actionTypes.GET_PRODUCTS:
+        case GET_PRODUCTS:
+            return {...state, products: payload, isLoading: false}
+        case SEARCH_PRODUCT:
             return {...state, products: payload, isLoading: false}
         default: 
             return state

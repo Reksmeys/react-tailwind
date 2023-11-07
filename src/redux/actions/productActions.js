@@ -15,3 +15,15 @@ export const fetchAllProducts = () => {
         })
     }
 }
+export const searchProducts = (title) => {
+    return (dispatch) => {
+        axios(`${API_URL}products?title=${title}`)
+        .then(resp => dispatch({
+            type: actionTypes.SEARCH_PRODUCT,
+            payload: resp.data
+        }))
+        .catch(er => {
+            console.log('in search product', er)
+        })
+    }
+}

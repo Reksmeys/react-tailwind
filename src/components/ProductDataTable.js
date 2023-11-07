@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { fetchAllProducts, searchProducts } from '../services/productAction';
 import { useNavigate } from 'react-router-dom';
-import { Button, Modal } from 'flowbite-react';
 import Modals from './Modals';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchProducts } from '../redux/actions/productActions';
 
 export default function ProductDataTable() {
-    const [products, setProducts] = useState([])
+    const dispatch = useDispatch()
+
+    // received global state
+    const {products} = useSelector(state => state.productR)
+    
     const [product, setProduct] = useState({})
     const [query, setQuery] = useState("")
 
@@ -56,8 +60,7 @@ export default function ProductDataTable() {
         }
     ];
     useEffect(() => {
-        searchProducts(query)
-        .then(res => setProducts(res))
+        dispatch(searchProducts(query))  
     }, [query])
     
     

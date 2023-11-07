@@ -1,19 +1,60 @@
-import React, { useState } from "react";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from 'yup'
+import { login } from "../redux/actions/authAction";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
 
-  const [email, setEmail] = useState("")
-  const handleInputChange = (e) => {
-    console.log(e.target.value)
-    setEmail(e.target.value)
-  }
-  const handleOnSubmit = (e) => {
-    e.preventDefault()
-    console.log("on submit", email)
-  }
+  const { isLoggedIn } = useSelector(state => state.authR);
+  const { message } = useSelector(state => state.msgR);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+  const pwdRules = /[a-z]/;
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validationSchema: Yup.object({
+        email: Yup.string()
+        .email("Please input a valid mail")
+        .required("Required"),
+        password: Yup.string().min(4)
+        .matches(pwdRules, {message: "Please create a stronger password"})
+        .required("Required")
+    }),
+    onSubmit: values => {
+      console.log(values)
+      dispatch(login(values.email, values.password))
+        .then(() => {
+          navigate("/dashboard");
+          window.location.reload();
+        })
+        .catch((er) => {
+          console.log("error login", er)
+        });
+      
+        if (isLoggedIn) {
+          return <Navigate to="/profile" />;
+        }
+    }
+  })
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
+
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="/"
@@ -33,7 +74,7 @@ export default function Login() {
             </h1>
             <form 
               className="space-y-4 md:space-y-6"
-              onSubmit={handleOnSubmit}
+              onSubmit={formik.handleSubmit}
               >
               <div>
                 <label
@@ -45,12 +86,15 @@ export default function Login() {
                 <input
                   type="email"
                   name="email"
-                  onChange={handleInputChange}
-                  id="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required=""
                 />
+                {
+                  formik.errors.email ? <p className="text-red-700">{formik.errors.email}</p> : null
+                }
               </div>
               <div>
                 <label
@@ -62,12 +106,15 @@ export default function Login() {
                 <input
                   type="password"
                   name="password"
-                  id="password"
-                  onChange={handleInputChange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 />
+                {
+                  formik.errors.password ? <p className="text-red-700">{formik.errors.password}</p> : null
+                }
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
