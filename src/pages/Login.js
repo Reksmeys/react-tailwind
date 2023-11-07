@@ -11,6 +11,7 @@ export default function Login() {
   const { isLoggedIn } = useSelector(state => state.authR);
 
   const dispatch = useDispatch();
+
   const navigate = useNavigate()
 
   const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
@@ -40,9 +41,9 @@ export default function Login() {
           console.log("error login", er)
         });
 
-      if (isLoggedIn) {
-        return <Navigate to="/profile" />;
-      }
+      // if (isLoggedIn) {
+      //   return <Navigate to="/profile" />;
+      // }
     }
   })
 

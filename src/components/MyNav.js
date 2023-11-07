@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 
 export default function MyNav() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const handleSwitchTheme = () => {
-    console.log(localStorage.getItem("color-theme"));
-    if (localStorage.getItem("color-theme") == "light") {
-      localStorage.setItem("color-theme", "dark");
+    console.log(secureLocalStorage.getItem("color-theme"));
+    if (secureLocalStorage.getItem("color-theme") == "light") {
+      secureLocalStorage.setItem("color-theme", "dark");
       document.documentElement.classList.add("dark");
       setTheme("dark");
     } else {
-      localStorage.setItem("color-theme", "light");
+      secureLocalStorage.setItem("color-theme", "light");
       setTheme("light");
       document.documentElement.classList.remove("dark");
     }

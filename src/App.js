@@ -14,14 +14,15 @@ import ProductForm from './components/ProductForm';
 import ProductDataTable from './components/ProductDataTable';
 import { useEffect } from 'react';
 import ProductFormik from './components/ProductFormik';
+import secureLocalStorage from 'react-secure-storage';
 
 function App() {
   useEffect(() => {
-    if (!localStorage.getItem('color-theme')){
+    if (!secureLocalStorage.getItem('color-theme')){
       // set default theme to light
-      localStorage.setItem('color-theme', 'light')
+      secureLocalStorage.setItem('color-theme', 'light')
     }
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (secureLocalStorage.getItem('color-theme') === 'dark' || (!('color-theme' in secureLocalStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark')
     }else{
       document.documentElement.classList.remove('dark')

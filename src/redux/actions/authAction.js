@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../utils/constant"
 import { actionTypes } from "./actionTypes"
+import secureLocalStorage from "react-secure-storage";
 
   // service login
   const authLogin = (email, password) => {
@@ -10,14 +11,14 @@ import { actionTypes } from "./actionTypes"
       })
       .then((response) => {
         if (response.data.access_token) {
-          localStorage.setItem("auth", response.data.access_token);
+          secureLocalStorage.setItem("auth", response.data.access_token);
         }
         return response.data;
       });
   };
   // service logout 
   const authlogout = () => {
-    localStorage.removeItem("auth");
+    secureLocalStorage.removeItem("auth");
   };
   
 
@@ -34,7 +35,7 @@ import { actionTypes } from "./actionTypes"
       },
       (error) => {
         console.log("failed login >>>>", error)
-        const message =(error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         dispatch({
           type: actionTypes.LOGIN_FAIL,
         });

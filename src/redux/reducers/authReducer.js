@@ -1,10 +1,9 @@
+import secureLocalStorage from "react-secure-storage";
 import { actionTypes } from "../actions/actionTypes";
 
-const auth = localStorage.getItem("auth");
+const auth = secureLocalStorage.getItem("auth");
 
-const initialState = auth
-  ? { isLoggedIn: true, auth }
-  : { isLoggedIn: false, auth: null };
+const initialState = auth ? { isLoggedIn: true, auth } : { isLoggedIn: false, auth: null };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
