@@ -1,9 +1,0 @@
-.dropdown-menu{
-    position: absolute;
-    top: 0;
-    /* inset: 0px auto auto 0px; */
-    margin: 0px;
-    transform: translate3d(1288px, 57px, 0px);
-    display: block;
-    z-index: -1;
-}
