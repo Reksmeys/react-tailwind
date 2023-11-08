@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchProducts } from "../redux/actions/productActions";
 import { logout } from "../redux/actions/authAction";
 import { fetchProfile } from "../redux/actions/profileAction";
+import './datatable.module.css'
+import { initFlowbite } from "flowbite";
 
 export default function ProductDataTable() {
   const dispatch = useDispatch();
@@ -81,6 +83,7 @@ export default function ProductDataTable() {
     },
   ];
   useEffect(() => {
+    initFlowbite()
     dispatch(searchProducts(query));
 
     // fetch profile
@@ -94,7 +97,7 @@ export default function ProductDataTable() {
 
   return isLoggedIn ? (
     <div class="antialiased bg-gray-50 dark:bg-gray-900">
-      <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+      <nav class=" bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
         <div class="flex flex-wrap justify-between items-center">
           <div class="flex justify-start items-center">
             <button
@@ -665,9 +668,10 @@ export default function ProductDataTable() {
                 alt="user profile of datatable dashboard"
               />
             </button>
+            
             <div
               class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
-              id="dropdown"
+              id="dropdown" data-popper-placement="bottom"
             >
               <div class="py-3 px-4">
                 <span class="block text-sm font-semibold text-gray-900 dark:text-white">
@@ -1389,17 +1393,7 @@ export default function ProductDataTable() {
         >
           Create Product
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            dispatch(logout())
-            navigate("/logout")
-          }}
-          className="text-white bg-gradient-to-r from-orange-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-        >
-          Logout
-        </button>
-
+        
         <DataTable
           columns={columns}
           data={products}
