@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchProducts } from "../redux/actions/productActions";
 import { logout } from "../redux/actions/authAction";
 import { fetchProfile } from "../redux/actions/profileAction";
-import './datatable.module.css'
 import { initFlowbite } from "flowbite";
 
 export default function ProductDataTable() {
