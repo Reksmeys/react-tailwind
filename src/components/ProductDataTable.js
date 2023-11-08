@@ -88,10 +88,10 @@ export default function ProductDataTable() {
     // fetch profile
     console.log(isLoggedIn)
     if(isLoggedIn){
-      dispatch(fetchProfile(auth.access_token))
+      dispatch(fetchProfile(auth))
     }
     console.log('profile>>>>', profile)
-    console.log('auth>>>>>', auth)
+    console.log(auth)
   }, [query]);
 
   return isLoggedIn ? (

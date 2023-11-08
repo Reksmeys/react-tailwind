@@ -15,6 +15,7 @@ import ProductDataTable from './components/ProductDataTable';
 import { useEffect } from 'react';
 import ProductFormik from './components/ProductFormik';
 import secureLocalStorage from 'react-secure-storage';
+import Profile from './pages/Profile';
 
 function App() {
   useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
           <Route path='/create' element={<ProductForm edit={false} />} />
           <Route path='/edit' element={<ProductForm edit={true} />} />
           <Route path='/formik' element={<ProductFormik />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='*' element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />} />

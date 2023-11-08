@@ -35,7 +35,7 @@ export default function Login() {
       dispatch(login(values.email, values.password))
         .then(() => {
           navigate("/dashboard");
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((er) => {
           console.log("error login", er)
