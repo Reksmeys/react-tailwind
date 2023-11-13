@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import ProductFormik from './components/ProductFormik';
 import secureLocalStorage from 'react-secure-storage';
 import Profile from './pages/Profile';
+import { initFlowbite } from 'flowbite';
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
     }else{
       document.documentElement.classList.remove('dark')
     }
+    initFlowbite()
   }, [])
 
   return (
