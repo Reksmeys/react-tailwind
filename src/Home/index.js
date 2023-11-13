@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Article from "../components/Article";
 import Cards from "../components/Cards";
 import Loadings from "../components/Loadings";
@@ -7,12 +7,14 @@ import { fetchAllProducts } from "../redux/actions/productActions";
 import computer from '../lotties/computer.json'
 import Lottie from "lottie-react";
 
+const Heavy = lazy(() => import('../components/Cards'))
+
 function Home() {
   // requesting action
   const dispatch = useDispatch();
 
   // received global state
-  let { products, isLoading } = useSelector((state) => state.productR);
+  let { products } = useSelector((state) => state.productR);
 
   // Intent to Subscription
   useEffect(() => {
@@ -84,20 +86,20 @@ function Home() {
           </p>
           {/* loop data from product to cards */}
           <section className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-4 gap-4">
-            {isLoading ? (
-              <Loadings />
-            ) : (
-              products.length > 0 &&
-              products.map((product) => (
-                <Cards
-                  key={product.id}
-                  url={product.images[0]}
-                  desc={product.title}
-                  id={product.id}
-                  price={product.price}
-                />
-              ))
-            )}
+            <Suspense fallback={<Loadings />}>
+                {
+                  products.length > 0 &&
+                  products.map((product) => (
+                    <Heavy
+                      key={product.id}
+                      url={product.images[0]}
+                      desc={product.title}
+                      id={product.id}
+                      price={product.price}
+                    />
+                  ))
+                }
+            </Suspense>
           </section>
         </section>
         <Article />
